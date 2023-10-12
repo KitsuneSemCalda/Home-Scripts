@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# We can use this script from enable or disable turbo boost in intel processors
+
+if [ "$1" == "--on" ]; then
+  printf "Enabling turbo boost\n"
+  echo "0" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+elif [ "$1" == "--verify" ]; then
+  printf "Verify turbo boost\n"
+  value=$(cat "/sys/devices/system/cpu/intel_pstate/no_turbo")
+  if [ "$value" -eq 0 ]; then
+    printf "Turbo Boost is enabled\n"
+  else
+    printf "Turbo Boost is disabled\n"
+  fi
+elif [ "$1" == "--off" ]; then
+  printf "Disabling turbo boost\n"
+  echo "1" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+else
+  printf "Usage: $0 --on|--off|--verify\n"
+  exit 1
+fi

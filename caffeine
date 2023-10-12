@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# We can use this script from enable or disable turbo boost in intel processors
+
+if [ "$1" == "--on" ]; then
+  printf "Enabling caffeine \n"
+  gsettings set org.gnome.desktop.session idle-delay 0
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+elif [ "$1" == "--off" ]; then
+  printf "Disabling caffeine \n"
+  gsettings set org.gnome.desktop.session idle-delay 900
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
+else
+  printf "Disabling caffeine \n"
+  gsettings set org.gnome.desktop.session idle-delay 0
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
+  gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
+fi
